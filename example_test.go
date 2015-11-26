@@ -14,4 +14,6 @@ func Example() {
 		t := <-tick.C
 		fmt.Printf("tick %d: %s", i, t)
 	}
+
+	tick.Stop()
 }
