@@ -36,7 +36,7 @@ func (t *Ticker) Stop() {
 func (t *Ticker) run(d time.Duration, c chan<- time.Time) {
 	var (
 		start = time.Now()
-		first = start.Add(d / 2).Round(d)
+		first = start.Add(d).Truncate(d)
 	)
 	time.Sleep(first.Sub(start))
 	ticker := time.NewTicker(d)
