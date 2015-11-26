@@ -39,16 +39,17 @@ func (t *Ticker) run(d time.Duration, c chan<- time.Time) {
 		first = start.Add(d / 2).Round(d)
 	)
 	time.Sleep(first.Sub(start))
-	tick := time.Tick(d)
+	ticker := time.NewTicker(d)
 	c <- first
 	next := first.Add(d)
 	for {
 		select {
-		case x := <-tick:
+		case x := <-ticker.C:
 			for ; next.Before(x); next = next.Add(d) {
 				c <- next
 			}
 		case <-t.quit:
+			ticker.Stop()
 			return
 		}
 	}
